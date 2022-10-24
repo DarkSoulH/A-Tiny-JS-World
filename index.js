@@ -1,30 +1,126 @@
 import { print } from './js/lib.js';
-/* Refer to https://github.com/OleksiyRudenko/a-tiny-JS-world for the task details
-   Complete the below for code reviewers' convenience:
 
-   Code repository: _put repo URL here_
-   Web app: _put project's github pages URL here_
-   */
+class livingOrganism {
+      constructor(options) {
+         this.species = options.species
+         this.name = options.name
+         this.gender = options.gender
+         this.greetings = options.greetings
+         this.friends = options.friends
+      }
 
-// ======== OBJECTS DEFINITIONS ========
-// Define your objects here
+      printProperties() {
+         return [
+            this.species,
+            this.name, 
+            this.gender,
+            this.greetings,
+         ].join("; ");
+      }
+   }
 
+class Human extends livingOrganism {
+   constructor(options) {
+      super(options)
+      this.species = 'Human'
+      this.legs = 2
+      this.hands = 2
+   }
 
-// ======== OUTPUT ========
-/* Use print(message) for output.
-   Default tag for message is <pre>. Use print(message,'div') to change containing element tag.
+   printProperties() {
+		return [
+			super.printProperties(),
+			`I have <strong>${this.legs} legs</strong>`,
+			`and <strong>${this.hands} hands</strong>;`,
+			(this.friends != undefined) ? this.friends : "no friends",
+		].join(" ");
+   }
+}
 
-   Message can contain HTML markup. You may also tweak index.html and/or styles.css.
-   However, please, REFRAIN from improving visuals at least until your code is reviewed
-   so code reviewers might focus on a single file that is index.js.
-   */
+class Man extends Human {
+   constructor(options) {
+      super(options)
+      this.gender = 'Man'
+   }
+}
 
-/* Print examples:
-   print('ABC');
-   print('<strong>ABC</strong>');
-   print('<strong>ABC</strong>', 'div');
+class Woman extends Human {
+   constructor(options) {
+      super(options)
+      this.gender = 'Woman'
+   } 
+}
 
-   print('human; John; male; 2; 2; Hello world!; Rex, Tom, Jenny');
-   print('human; <strong>John</strong>; male; 2; 2; <em>Hello world!</em>; Rex, Tom, Jenny');
-   print('human; <strong>John</strong>; male; 2; 2; <em>Hello world!</em>; Rex, Tom, Jenny', 'div');
-   */
+class CatWoman extends Woman {
+   constructor(options) {
+      super(options)
+      this.species = 'CatWoman'
+      this.gender = 'Woman'
+   }
+}
+
+class Animal extends livingOrganism {
+   constructor(options) {
+      super(options)
+      this.paws = 4
+   }
+
+   printProperties() {
+		return [
+			super.printProperties(),
+			`Animal has <strong>${this.paws}<strong> paws`,
+		].join(" ");
+	}
+}
+
+class Dog extends Animal {
+   constructor(options) {
+      super(options)
+      this.greetings = 'Ruff!'
+   }
+}
+
+class Cat extends Animal {
+   constructor(options) {
+      super(options)
+      this.greetings = 'Meow-Meow!'
+   }
+}
+
+const man = new Man({
+   name: 'Vladislav',
+   greetings: 'Hi everyone!',
+   friends: 'Tobic'
+})
+
+const woman = new Woman({
+   name: 'Viktoria',
+   greetings: 'Hi there!',
+   friends: 'Kitty, Sendi'
+})
+
+const catwoman = new CatWoman({
+   name: 'Kitty',
+   greetings: "I'm a CatWoman!",
+   friends: 'Viktoria'
+})
+
+const dog = new Dog({
+   species: 'Dog',
+   name: 'Tobic',
+   gender: 'Male'
+})
+
+const cat = new Cat({
+   species: 'Cat',
+   name: 'Sendi',
+   gender: 'Female'
+})
+
+const inhabitants = [man, woman, catwoman, dog, cat];
+
+inhabitants.forEach(inhabitant => {
+   print(inhabitant.printProperties())
+});
+
+console.log(man)
